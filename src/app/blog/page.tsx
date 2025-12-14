@@ -4,9 +4,10 @@ import { Badge } from "@/components/ui/badge"
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import BlogSidebar from './_components/BlogSidebar'
 
+import { getArticles } from '@/lib/data/articles'
+
 const Page = async () => {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-    const articles = await fetch(`${baseUrl}/api/article`).then((res) => res.json())
+    const articles = await getArticles()
     console.log(articles)
 
     return (

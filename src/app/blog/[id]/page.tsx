@@ -9,13 +9,17 @@ import { notFound } from 'next/navigation'
 import SpecificBlogSidebar from "./_components/SpecificBlogSidebar"
 import { dataFormat } from "@/utilities/dataFormat"
 
+import { getArticleById } from '@/lib/data/articles'
+
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
 
+    const result = await getArticleById(id);
 
-    const res = await fetch(`http://localhost:3000/api/article/${id}`)
-    if (res.status === 404) notFound();
-    const { data } = await res.json();
+    if (!result.success || !result.data) {
+        notFound();
+    }
+    const data = result.data;
     console.log(data)
 
     // const similarPosts = article.filter((post: any) => post.categoryId === article.categoryId)
@@ -36,7 +40,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 <div className="flex flex-wrap items-center gap-3 justify-center md:justify-start">
                     <Badge variant="secondary" className="px-3 py-1">{data.category.name}</Badge>
                     <span className="text-sm text-muted-foreground flex items-center gap-1">
-                        <Calendar className="h-3 w-3" /> {dataFormat(data.createdAt)}
+                        <Calendar className="h-3 w-3" /> {dataFormat(data.createdAt.toISOString())}
                     </span>
                 </div>
 
@@ -47,10 +51,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 <div id="author" className="flex items-center justify-center md:justify-between border-y py-6">
                     <div className="flex items-center gap-3">
                         <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-                            {data.user.name.charAt(0)}
+                            {(data.user?.name || "A").charAt(0)}
                         </div>
                         <div className="text-left">
-                            <p className="text-sm font-medium">{data.user.name}</p>
+                            <p className="text-sm font-medium">{data.user?.name || "Anonymous"}</p>
                             <p className="text-xs text-muted-foreground">Author</p>
                         </div>
                     </div>
@@ -66,7 +70,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             {/* Featured Image */}
             <div className="relative aspect-video w-full overflow-hidden rounded-xl mb-12 shadow-lg">
                 <img
-                    src={data.image}
+                    src={data.image || ""}
                     alt={data.title}
                     className="object-cover w-full h-full"
                 />

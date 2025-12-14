@@ -2,10 +2,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@
 import { Search, Filter } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
+import { getCategories } from '@/lib/data/categories'
+
 const BlogSidebar = async () => {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-    const response = await fetch(`${baseUrl}/api/category`)
-    const categories = await response.json()
+
+    const categories = await getCategories()
 
     const sidebarData = [
         {
