@@ -54,7 +54,7 @@ export function ArticleForm({ categories }: ArticleFormProps) {
             })
             setLoading(false)
             console.log(response)
-            await router.push("/dashboard/article")
+            // await router.push("/dashboard/article")
         } catch (error) {
             console.log(error)
             setLoading(false)

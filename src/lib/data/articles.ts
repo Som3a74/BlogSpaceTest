@@ -83,3 +83,51 @@ export async function getArticleById(id: string) {
         };
     }
 }
+
+export async function addArticle(data: any) {
+    try {
+        const payload = await data;
+        const categoryId = Number(payload.categoryId);
+        const userId = Number(payload.userId) || 1;
+
+        if (!categoryId || isNaN(categoryId)) {
+            return {
+                success: false,
+                message: "Invalid or missing Category ID",
+                status: 400,
+                data: null
+            };
+        }
+
+        const article = await prisma.article.create({
+            data: {
+                title: payload.title,
+                introduction: payload.introduction,
+                proTip: payload.proTip,
+                conclusion: payload.conclusion,
+                published: payload.published,
+                image: payload.image,
+                categoryId: categoryId,
+                userId: userId,
+                createdAt: payload.createdAt,
+                updatedAt: payload.updatedAt
+            }
+        })
+
+        return {
+            success: true,
+            data: article,
+            message: "Article created successfully",
+            status: 201
+        }
+
+    } catch (error) {
+        return {
+            success: false,
+            message: 'Internal Server Error',
+            error: error instanceof Error ? error.message : error,
+            status: 500,
+            data: null
+        }
+    }
+}

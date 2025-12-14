@@ -1,0 +1,56 @@
+{
+    "featuredCategories": [
+        {
+            "id": 1,
+            "name": "Technology"
+        },
+        {
+            "id": 2,
+            "name": "Design"
+        },
+        {
+            "id": 3,
+            "name": "Development"
+        },
+        {
+            "id": 4,
+            "name": "Frameworks"
+        }
+    ],
+    "categories": [
+        {
+            "id": 1,
+            "name": "Technology"
+        },
+        {
+            "id": 2,
+            "name": "Design"
+        },
+        {
+            "id": 3,
+            "name": "Development"
+        },
+        {
+            "id": 4,
+            "name": "Frameworks"
+        }
+    ],
+    "tags": [
+        {
+            "id": 1,
+            "name": "Technology"
+        },
+        {
+            "id": 2,
+            "name": "Design"
+        },
+        {
+            "id": 3,
+            "name": "Development"
+        },
+        {
+            "id": 4,
+            "name": "Frameworks"
+        }
+    ]
+}

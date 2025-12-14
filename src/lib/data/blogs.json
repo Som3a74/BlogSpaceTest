@@ -1,0 +1,116 @@
+[
+    {
+        "id": "1",
+        "title": "The Future of AI in Web Design",
+        "excerpt": "How artificial intelligence is reshaping the way we build and design websites. From automated layouts to intelligent color palettes, AI is changing the game.",
+        "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
+        "category": "Technology",
+        "date": "Feb 15, 2025",
+        "readTime": "5 min read",
+        "author": {
+            "name": "Sarah Connor",
+            "avatar": "SC"
+        },
+        "tags": [
+            "AI",
+            "Design",
+            "Future"
+        ],
+        "slug": "#"
+    },
+    {
+        "id": "2",
+        "title": "Mastering Tailwind CSS v4",
+        "excerpt": "A comprehensive guide to the new features and improvements in Tailwind CSS version 4. Learn about the new engine and how it optimizes your build.",
+        "image": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=800&q=80",
+        "category": "Development",
+        "date": "Feb 10, 2025",
+        "readTime": "8 min read",
+        "author": {
+            "name": "Mike Ross",
+            "avatar": "MR"
+        },
+        "tags": [
+            "CSS",
+            "Tailwind",
+            "Frontend"
+        ],
+        "slug": "#"
+    },
+    {
+        "id": "3",
+        "title": "The Psychology of Color in UI",
+        "excerpt": "Understanding how color choices impact user behavior and conversion rates. Learn the science behind color theory in digital interfaces.",
+        "image": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
+        "category": "Design",
+        "date": "Feb 05, 2025",
+        "readTime": "6 min read",
+        "author": {
+            "name": "Jessica Pearson",
+            "avatar": "JP"
+        },
+        "tags": [
+            "UI/UX",
+            "Color",
+            "Psychology"
+        ],
+        "slug": "#"
+    },
+    {
+        "id": "4",
+        "title": "Next.js 15: What's New?",
+        "excerpt": "Everything you need to know about the latest update to the React framework. Server Actions, Partial Prerendering, and more.",
+        "image": "https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?auto=format&fit=crop&w=800&q=80",
+        "category": "Frameworks",
+        "date": "Jan 28, 2025",
+        "readTime": "10 min read",
+        "author": {
+            "name": "Harvey Specter",
+            "avatar": "HS"
+        },
+        "tags": [
+            "Next.js",
+            "React",
+            "JavaScript"
+        ],
+        "slug": "#"
+    },
+    {
+        "id": "5",
+        "title": "Building Accessible Web Apps",
+        "excerpt": "Why accessibility matters and how to implement it in your modern web applications. Ensure your site is usable by everyone.",
+        "image": "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80",
+        "category": "Development",
+        "date": "Jan 20, 2025",
+        "readTime": "7 min read",
+        "author": {
+            "name": "Louis Litt",
+            "avatar": "LL"
+        },
+        "tags": [
+            "Accessibility",
+            "A11y",
+            "Web"
+        ],
+        "slug": "#"
+    },
+    {
+        "id": "6",
+        "title": "The Rise of Serverless Computing",
+        "excerpt": "Exploring the benefits and drawbacks of serverless architecture. Is it the right choice for your next project?",
+        "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80",
+        "category": "Technology",
+        "date": "Jan 15, 2025",
+        "readTime": "6 min read",
+        "author": {
+            "name": "Donna Paulsen",
+            "avatar": "DP"
+        },
+        "tags": [
+            "Serverless",
+            "Cloud",
+            "Architecture"
+        ],
+        "slug": "#"
+    }
+]
