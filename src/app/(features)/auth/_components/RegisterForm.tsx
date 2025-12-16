@@ -5,17 +5,44 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 export function RegisterForm() {
     const [loading, setLoading] = useState(false)
+    const router = useRouter()
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 2000))
-        setLoading(false)
-        console.log("Registered")
+
+        const formData = new FormData(e.currentTarget)
+        const name = formData.get("name")
+        const email = formData.get("email")
+        const password = formData.get("password")
+
+        try {
+            const res = await fetch("/api/user/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, email, password })
+            })
+
+            const data = await res.json()
+
+            if (!res.ok) {
+                throw new Error(data.message || "Something went wrong")
+            }
+
+            toast.success("Account created successfully")
+            router.push("/auth/login")
+        } catch (error: any) {
+            toast.error(error.message || "Failed to create account")
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -24,6 +51,7 @@ export function RegisterForm() {
                 <Label htmlFor="name">Full Name</Label>
                 <Input
                     id="name"
+                    name="name"
                     placeholder="John Doe"
                     required
                     disabled={loading}
@@ -33,6 +61,7 @@ export function RegisterForm() {
                 <Label htmlFor="email">Email</Label>
                 <Input
                     id="email"
+                    name="email"
                     type="email"
                     placeholder="m@example.com"
                     required
@@ -43,6 +72,7 @@ export function RegisterForm() {
                 <Label htmlFor="password">Password</Label>
                 <Input
                     id="password"
+                    name="password"
                     type="password"
                     required
                     disabled={loading}

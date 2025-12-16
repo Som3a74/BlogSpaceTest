@@ -1,4 +1,6 @@
 import prisma from '@/lib/prisma'
+import { ResponseHelper } from '@/lib/api-response'
+import { TArticle } from '@/types/article'
 
 export async function getArticles() {
     try {
@@ -24,21 +26,10 @@ export async function getArticles() {
             }
         })
 
-        return {
-            data: formattedArticles,
-            status: 200,
-            success: true,
-            message: "Articles fetched successfully",
-        }
+        return ResponseHelper.success(formattedArticles, "Articles fetched successfully");
 
     } catch (error) {
-        return {
-            success: false,
-            message: 'Internal Server Error',
-            error: error instanceof Error ? error.message : error,
-            data: [], // Ensure data is always an array to prevent crashes
-            status: 500
-        }
+        return ResponseHelper.error(error, 'Internal Server Error', 500, []);
     }
 }
 
@@ -53,12 +44,7 @@ export async function getArticleById(id: string) {
         });
 
         if (!article) {
-            return {
-                success: false,
-                message: `Article ${id} Not Found`,
-                status: 404,
-                data: null
-            };
+            return ResponseHelper.error(null, `Article ${id} Not Found`, 404, null);
         }
 
         const content = {
@@ -67,36 +53,20 @@ export async function getArticleById(id: string) {
             Conclusion: article.conclusion,
         };
 
-        return {
-            success: true,
-            data: { ...article, content },
-            status: 200
-        };
+        return ResponseHelper.success({ ...article, content });
 
     } catch (error) {
-        return {
-            success: false,
-            message: "Internal Server Error",
-            error: error instanceof Error ? error.message : error,
-            status: 500,
-            data: null
-        };
+        return ResponseHelper.error(error, "Internal Server Error", 500, null);
     }
 }
 
-export async function addArticle(data: any) {
+export async function addArticle(data: TArticle) {
     try {
         const payload = await data;
         const categoryId = Number(payload.categoryId);
-        const userId = Number(payload.userId) || 1;
 
         if (!categoryId || isNaN(categoryId)) {
-            return {
-                success: false,
-                message: "Invalid or missing Category ID",
-                status: 400,
-                data: null
-            };
+            return ResponseHelper.error(null, "Invalid or missing Category ID", 400, null);
         }
 
         const article = await prisma.article.create({
@@ -108,26 +78,15 @@ export async function addArticle(data: any) {
                 published: payload.published,
                 image: payload.image,
                 categoryId: categoryId,
-                userId: userId,
+                userId: payload.userId,
                 createdAt: payload.createdAt,
                 updatedAt: payload.updatedAt
             }
         })
 
-        return {
-            success: true,
-            data: article,
-            message: "Article created successfully",
-            status: 201
-        }
+        return ResponseHelper.success(article, "Article created successfully", 201);
 
     } catch (error) {
-        return {
-            success: false,
-            message: 'Internal Server Error',
-            error: error instanceof Error ? error.message : error,
-            status: 500,
-            data: null
-        }
+        return ResponseHelper.error(error, 'Internal Server Error', 500, null);
     }
 }

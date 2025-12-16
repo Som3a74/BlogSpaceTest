@@ -41,7 +41,7 @@ export function ArticleForm({ categories }: ArticleFormProps) {
             image: formData.get("image"),
             createdAt: new Date(),
             updatedAt: new Date(),
-            userId: 1,
+            userId: "cmj8znd990000nodom47bzoai",
         }
 
         try {

@@ -1,34 +1,19 @@
 import prisma from '@/lib/prisma'
 import { TCategory } from '@/types/category'
+import { ResponseHelper } from '@/lib/api-response'
 
 export async function getCategories() {
     try {
         const categories = await prisma.category.findMany()
         if (!categories) {
-            return {
-                message: "Categories not found",
-                status: 404,
-                success: false,
-                data: []
-            }
+            return ResponseHelper.error(null, "Categories not found", 404, []);
         }
 
-        return {
-            data: categories,
-            message: "Categories fetched successfully",
-            status: 200,
-            success: true,
-        }
+        return ResponseHelper.success(categories, "Categories fetched successfully");
 
 
     } catch (error) {
-        return {
-            message: "Failed to fetch categories",
-            error: error instanceof Error ? error.message : error,
-            status: 500,
-            success: false,
-            data: []
-        }
+        return ResponseHelper.error(error, "Internal Server Error", 500, []);
     }
 }
 
@@ -42,29 +27,12 @@ export async function AddCategory(data: TCategory) {
             }
         })
 
-        return {
-            success: true,
-            data: category,
-            message: "Category created successfully",
-            status: 201
-        }
+        return ResponseHelper.success(category, "Category created successfully", 201);
 
     } catch (error: any) {
         if (error.code === 'P2002') {
-            return {
-                success: false,
-                message: 'Category with this name already exists',
-                error: error.message,
-                status: 409, // Conflict
-                data: null
-            }
+            return ResponseHelper.error(error, 'Category with this name already exists', 409, null);
         }
-        return {
-            success: false,
-            message: 'Internal Server Error',
-            error: error instanceof Error ? error.message : "Unknown error",
-            status: 500,
-            data: null
-        }
+        return ResponseHelper.error(error, 'Internal Server Error', 500, null);
     }
 }

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
+import { toast } from "sonner"
 
 export function LoginForm() {
     const [loading, setLoading] = useState(false)
@@ -14,14 +15,31 @@ export function LoginForm() {
         setLoading(true)
 
         const formData = new FormData(e.currentTarget)
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 2000))
-        const email = formData.get("email")
-        const password = formData.get("password")
-        console.log(email, password)
-        setLoading(false)
-        console.log("Logged in")
+
+        const formDataObject = {
+            email: formData.get("email"),
+            password: formData.get("password"),
+        }
+
+        try {
+            const response = await fetch("/api/user/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formDataObject),
+            })
+            const data = await response.json()
+            console.log(data)
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            toast.error("Failed to login")
+            console.log("Failed to login", error)
+        }
     }
+
+
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
