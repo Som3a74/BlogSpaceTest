@@ -27,7 +27,7 @@ const Page = async () => {
                         Stay ahead of the curve with expert analysis.
                     </p>
                 </div>
-                <BlogSlider blogs={articles.data} />
+                <BlogSlider blogs={articles.data || []} />
             </section>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -38,7 +38,7 @@ const Page = async () => {
                 <main className="lg:col-span-3 space-y-8">
                     {/* Article Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                        {articles.data.map((post: any) => (
+                        {articles.data?.map((post: any) => (
                             <BlogCard
                                 id={post.id}
                                 key={post.id}
