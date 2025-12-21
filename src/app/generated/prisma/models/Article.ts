@@ -595,10 +595,6 @@ export type ArticleUncheckedUpdateManyWithoutCategoryNestedInput = {
   deleteMany?: Prisma.ArticleScalarWhereInput | Prisma.ArticleScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type ArticleCreateNestedOneWithoutCommentsInput = {
   create?: Prisma.XOR<Prisma.ArticleCreateWithoutCommentsInput, Prisma.ArticleUncheckedCreateWithoutCommentsInput>
   connectOrCreate?: Prisma.ArticleCreateOrConnectWithoutCommentsInput

@@ -6,43 +6,40 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
+import { authClient } from "@/lib/auth-client";
 
 export function RegisterForm() {
     const [loading, setLoading] = useState(false)
-    const router = useRouter()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setLoading(true)
 
         const formData = new FormData(e.currentTarget)
         const name = formData.get("name")
         const email = formData.get("email")
         const password = formData.get("password")
 
-        try {
-            const res = await fetch("/api/user/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ name, email, password })
-            })
-
-            const data = await res.json()
-
-            if (!res.ok) {
-                throw new Error(data.message || "Something went wrong")
-            }
-
-            toast.success("Account created successfully")
-            router.push("/auth/login")
-        } catch (error: any) {
-            toast.error(error.message || "Failed to create account")
-        } finally {
-            setLoading(false)
-        }
+        const { data, error } = await authClient.signUp.email({
+            email: email as string,
+            password: password as string,
+            name: name as string,
+            callbackURL: "/dashboard"
+        }, {
+            onRequest: (ctx) => {
+                console.log(ctx);
+                setLoading(true)
+            },
+            onSuccess: (ctx) => {
+                console.log(ctx);
+                toast.success("Account created successfully" + ctx.data.user.name)
+            },
+            onError: (ctx) => {
+                console.log(ctx);
+                toast.error(ctx.error.statusText);
+            },
+        });
+        setLoading(false)
+        console.log(data);
     }
 
     return (

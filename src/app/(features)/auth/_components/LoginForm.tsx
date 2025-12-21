@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import { FormFeedback } from "@/components/feedback/form-feedback"
+import { authClient } from "@/lib/auth-client";
 
 export function LoginForm() {
     const [loading, setLoading] = useState(false)
@@ -14,37 +15,30 @@ export function LoginForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setLoading(true)
 
         const formData = new FormData(e.currentTarget)
-
-        const formDataObject = {
-            email: formData.get("email"),
-            password: formData.get("password"),
-        }
-
-        try {
-            const response = await fetch("/api/user/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formDataObject),
-            })
-            const data = await response.json()
-
-            if (response.status === 200) {
-                setLoading(false)
-                toast.success(data.message)
-            } else {
-                setError(data.message || "Failed to login");
-                setLoading(false)
-            }
-
-        } catch (error) {
-            setLoading(false)
-            setError(error as string)
-        }
+        const email = formData.get("email")
+        const password = formData.get("password")
+        const { data, error } = await authClient.signIn.email({
+            email: email as string,
+            password: password as string,
+            callbackURL: "/dashboard"
+        }, {
+            onRequest: (ctx) => {
+                console.log(ctx);
+                setLoading(true)
+            },
+            onSuccess: (ctx) => {
+                console.log(ctx);
+                toast.success("Account created successfully" + ctx.data.user.name)
+            },
+            onError: (ctx) => {
+                console.log(ctx);
+                toast.error(ctx.error.statusText);
+            },
+        });
+        setLoading(false)
+        console.log(data);
     }
 
     useEffect(() => {
