@@ -11,6 +11,7 @@ import { authClient } from "@/lib/auth-client";
 export function RegisterForm() {
     const [loading, setLoading] = useState(false)
 
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
@@ -23,7 +24,7 @@ export function RegisterForm() {
             email: email as string,
             password: password as string,
             name: name as string,
-            callbackURL: "/dashboard"
+            callbackURL: "/"
         }, {
             onRequest: (ctx) => {
                 console.log(ctx);

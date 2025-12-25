@@ -126,7 +126,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
                     </div>
                 </div>
 
-                <div className="flex justify-start pt-6">
+                <div className="flex justify-center sm:justify-start pt-6">
                     <Button
                         type="submit"
                         disabled={loading}

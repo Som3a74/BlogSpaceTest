@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
@@ -11,13 +11,11 @@ import {
     PlusCircle,
     FileText,
     BarChart3,
-    LogOut,
     Menu,
     ChevronLeft,
     ChevronRight,
+    ClipboardList,
 } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
 import { useState } from "react"
 import { authClient } from "@/lib/auth-client"
 
@@ -25,27 +23,13 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function DashboardSidebar({ className }: SidebarProps) {
     const pathname = usePathname()
-    const router = useRouter()
-    const { data: session } = authClient.useSession()
     const [collapsed, setCollapsed] = useState(false)
+    const { data: session } = authClient.useSession()
+    const userRole = (session?.user as any)?.role
 
     const toggleCollapse = () => {
         setCollapsed(!collapsed)
     }
-
-    const handleLogout = async () => {
-        await authClient.signOut({
-            fetchOptions: {
-                onSuccess: () => {
-                    router.push("/auth/login")
-                }
-            }
-        })
-    }
-
-    const userInitials = session?.user?.name
-        ? session.user.name.split(" ").map((n: string) => n[0]).join("").toUpperCase()
-        : "US"
 
     const routes = [
         {
@@ -66,12 +50,18 @@ export function DashboardSidebar({ className }: SidebarProps) {
             href: "/dashboard/analytics",
             color: "text-orange-700",
         },
-        {
+        ...(userRole === "ADMIN" ? [{
             label: "Add Category",
             icon: PlusCircle,
             href: "/dashboard/category/add-category",
             color: "text-violet-500",
-        },
+        }] : []),
+        ...(userRole === "ADMIN" ? [{
+            label: "All Requests",
+            icon: ClipboardList,
+            href: "/dashboard/requests",
+            color: "text-violet-500",
+        }] : []),
     ]
 
     return (
@@ -146,56 +136,12 @@ export function DashboardSidebar({ className }: SidebarProps) {
                     ))}
                 </div>
             </div>
-
-            <div className="p-4 mt-auto">
-                {!collapsed && <Separator className="bg-white/10 mb-4" />}
-                <div className={cn("flex items-center gap-x-3 rounded-xl p-2 transition-colors hover:bg-white/5", collapsed ? "justify-center" : "")}>
-                    <Avatar className="h-9 w-9 border border-white/10">
-                        <AvatarImage className="object-cover" src={session?.user?.image || ""} />
-                        <AvatarFallback className="bg-slate-800 text-slate-200">{userInitials}</AvatarFallback>
-                    </Avatar>
-                    {!collapsed && (
-                        <div className="flex flex-col overflow-hidden">
-                            <p className="text-sm font-medium truncate text-white">{session?.user?.name || "User"}</p>
-                            <p className="text-xs text-zinc-500 truncate">{session?.user?.email || "user@example.com"}</p>
-                        </div>
-                    )}
-                </div>
-
-                <Button
-                    variant="ghost"
-                    onClick={handleLogout}
-                    className={cn(
-                        "w-full mt-2 text-zinc-400 hover:text-white hover:bg-white/5",
-                        collapsed ? "justify-center px-0" : "justify-start pl-3"
-                    )}
-                >
-                    <LogOut className="h-4 w-4" />
-                    {!collapsed && <span className="ml-3">Logout</span>}
-                </Button>
-            </div>
         </div>
     )
 }
 
 export const MobileSidebar = () => {
     const pathname = usePathname()
-    const router = useRouter()
-    const { data: session } = authClient.useSession()
-
-    const handleLogout = async () => {
-        await authClient.signOut({
-            fetchOptions: {
-                onSuccess: () => {
-                    router.push("/auth/login")
-                }
-            }
-        })
-    }
-
-    const userInitials = session?.user?.name
-        ? session.user.name.split(" ").map((n: string) => n[0]).join("").toUpperCase()
-        : "US"
 
     const routes = [
         { label: "Overview", icon: LayoutDashboard, href: "/dashboard", color: "text-sky-500" },
@@ -249,29 +195,6 @@ export const MobileSidebar = () => {
                                 </Link>
                             ))}
                         </div>
-                    </div>
-
-                    <div className="mt-auto p-6 space-y-4">
-                        <Separator className="bg-white/10" />
-                        <div className="flex items-center gap-x-3 p-2">
-                            <Avatar className="h-10 w-10 border border-white/10">
-                                <AvatarImage src={session?.user?.image || ""} />
-                                <AvatarFallback className="bg-slate-800 text-slate-200">{userInitials}</AvatarFallback>
-                            </Avatar>
-                            <div className="flex flex-col overflow-hidden">
-                                <p className="text-sm font-medium truncate text-white">{session?.user?.name || "User"}</p>
-                                <p className="text-xs text-zinc-500 truncate">{session?.user?.email || "user@example.com"}</p>
-                            </div>
-                        </div>
-
-                        <Button
-                            variant="ghost"
-                            onClick={handleLogout}
-                            className="w-full justify-start text-zinc-400 hover:text-white hover:bg-white/5 pl-2"
-                        >
-                            <LogOut className="h-4 w-4 mr-3" />
-                            <span>Logout</span>
-                        </Button>
                     </div>
                 </div>
             </SheetContent>

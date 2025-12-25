@@ -22,7 +22,7 @@ export function LoginForm() {
         const { data, error } = await authClient.signIn.email({
             email: email as string,
             password: password as string,
-            callbackURL: "/dashboard"
+            callbackURL: "/"
         }, {
             onRequest: (ctx) => {
                 console.log(ctx);

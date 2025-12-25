@@ -21,7 +21,7 @@ export function AuthorRequestForm({ userStatus }: AuthorRequestFormProps) {
         setLoading(true)
 
         try {
-            const response = await fetch("/api/user/apply-author", {
+            const response = await fetch("/api/user/author-request", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -131,7 +131,7 @@ export function AuthorRequestForm({ userStatus }: AuthorRequestFormProps) {
                     </div>
                 </div>
 
-                <div className="flex justify-start pt-2">
+                <div className="flex justify-center sm:justify-start pt-2">
                     <Button
                         type="submit"
                         disabled={loading}

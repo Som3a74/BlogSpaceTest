@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProfileForm } from "./_components/ProfileForm";
 import { AuthorRequestForm } from "./_components/AuthorRequestForm";
-import { User, ShieldCheck, Calendar, Settings2, PenLine, ChevronRight, LayoutGrid } from "lucide-react";
+import { User, ShieldCheck, Calendar, Settings2, PenLine, ChevronRight, LayoutGrid, XCircle } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
@@ -21,11 +21,12 @@ export default async function ProfilePage() {
     const userRequest = await prisma.authorRequest.findUnique({
         where: { userId: session.user.id }
     });
+    console.log(userRequest)
 
     return (
         <div className="min-h-screen bg-slate-50/40 dark:bg-[#050505]">
             <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-16 lg:py-20">
-                <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center lg:items-start">
 
                     {/* Left: Quick Profile Card */}
                     <div className="w-full lg:w-80 space-y-8 lg:sticky lg:top-32 animate-in fade-in slide-in-from-left-4 duration-700 flex flex-col items-center lg:items-start text-center lg:text-left">
@@ -90,7 +91,7 @@ export default async function ProfilePage() {
 
                                 <TabsContent value="author" className="focus-visible:ring-0 outline-none">
                                     {session.user.role === "AUTHOR" || session.user.role === "ADMIN" ? (
-                                        <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 rounded-[2.5rem] p-12 text-center space-y-8 shadow-sm relative overflow-hidden group">
+                                        <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 rounded-[2.5rem] p-8 md:p-12 text-center space-y-8 shadow-sm relative overflow-hidden group">
                                             <div className="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-transparent via-primary/30 to-transparent" />
                                             <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto border border-primary/20 shadow-inner group-hover:scale-110 transition-transform duration-500">
                                                 <ShieldCheck className="h-10 w-10 text-primary" />
@@ -105,8 +106,8 @@ export default async function ProfilePage() {
                                                 Enter Author Dashboard <ChevronRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                                             </Link>
                                         </div>
-                                    ) : userRequest ? (
-                                        <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 rounded-[2.5rem] p-12 text-center space-y-10 shadow-sm relative overflow-hidden group">
+                                    ) : userRequest?.status === "PENDING" ? (
+                                        <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 rounded-[2.5rem] p-8 md:p-12 text-center space-y-10 shadow-sm relative overflow-hidden group">
                                             <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl -mr-16 -mt-16" />
                                             <div className="w-20 h-20 bg-amber-50 dark:bg-amber-900/20 rounded-3xl flex items-center justify-center mx-auto border border-amber-200 dark:border-amber-900/30">
                                                 <Calendar className="h-10 w-10 text-amber-600 dark:text-amber-500" />
@@ -119,7 +120,25 @@ export default async function ProfilePage() {
                                             </div>
                                             <div className="pt-2">
                                                 <span className="px-6 py-2.5 rounded-full bg-amber-100/50 dark:bg-amber-500/10 text-[10px] font-black uppercase tracking-[0.25em] text-amber-700 dark:text-amber-400 border border-amber-200/50 dark:border-amber-500/20">
-                                                    Application {userRequest.status}
+                                                    Application PENDING
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ) : userRequest?.status === "REJECTED" ? (
+                                        <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 rounded-[2.5rem] p-8 md:p-12 text-center space-y-10 shadow-sm relative overflow-hidden group">
+                                            <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-full blur-3xl -mr-16 -mt-16" />
+                                            <div className="w-20 h-20 bg-rose-50 dark:bg-rose-900/20 rounded-3xl flex items-center justify-center mx-auto border border-rose-200 dark:border-rose-900/30">
+                                                <XCircle className="h-10 w-10 text-rose-600 dark:text-rose-500" />
+                                            </div>
+                                            <div className="space-y-3">
+                                                <h3 className="text-2xl font-black text-slate-900 dark:text-white">Application Restricted</h3>
+                                                <p className="text-slate-500 dark:text-slate-400 font-light leading-relaxed max-w-sm mx-auto">
+                                                    Unfortunately, your application for author status was not approved at this time.
+                                                </p>
+                                            </div>
+                                            <div className="pt-2">
+                                                <span className="px-6 py-2.5 rounded-full bg-rose-100/50 dark:bg-rose-500/10 text-[10px] font-black uppercase tracking-[0.25em] text-rose-700 dark:text-rose-400 border border-rose-200/50 dark:border-rose-500/20">
+                                                    Status: Rejected
                                                 </span>
                                             </div>
                                         </div>
