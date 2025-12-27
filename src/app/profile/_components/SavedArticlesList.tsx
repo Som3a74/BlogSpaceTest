@@ -1,4 +1,4 @@
-import { Article, Category } from "@/app/generated/prisma";
+import { Article, Category } from "@/app/generated/prisma/client";
 import Link from "next/link";
 import { Bookmark, Calendar, ChevronRight } from "lucide-react";
 
