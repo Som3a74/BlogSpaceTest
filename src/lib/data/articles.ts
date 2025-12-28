@@ -7,7 +7,7 @@ export async function getArticles() {
         const articles = await prisma.article.findMany({
             where: { published: true },
             include: {
-                user: { select: { id: true, name: true } },
+                user: { select: { id: true, name: true, image: true } },
                 category: { select: { id: true, name: true } }
             },
             orderBy: { createdAt: 'desc' }
@@ -25,7 +25,7 @@ export async function getArticleBySlug(slug: string) {
         const article = await prisma.article.findUnique({
             where: { slug: slug },
             include: {
-                user: { select: { id: true, name: true } },
+                user: { select: { id: true, name: true, image: true } },
                 category: { select: { id: true, name: true } }
             }
         });
@@ -46,7 +46,7 @@ export async function getArticleById(id: string) {
         const article = await prisma.article.findUnique({
             where: { id: Number(id) },
             include: {
-                user: { select: { id: true, name: true } },
+                user: { select: { id: true, name: true, image: true } },
                 category: { select: { id: true, name: true } }
             }
         });

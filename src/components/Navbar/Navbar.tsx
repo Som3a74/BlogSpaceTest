@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation"
 import { NavItems } from "./_components/NavItems"
 import { UserMenu } from "./_components/UserMenu"
 import { MobileMenu } from "./_components/MobileMenu"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
 export function Navbar() {
     const { data: session, isPending } = authClient.useSession()
@@ -55,6 +56,7 @@ export function Navbar() {
                 <NavItems items={navItems} />
 
                 <div className="flex items-center gap-2 md:gap-4">
+                    <ThemeToggle />
                     {isPending ? (
                         <div className="flex items-center gap-4">
                             <Skeleton className="h-10 w-10 rounded-full" />
