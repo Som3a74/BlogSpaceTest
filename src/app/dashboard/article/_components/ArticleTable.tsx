@@ -107,7 +107,7 @@ export function ArticleTable({ articles }: ArticleTableProps) {
                                                     </Link>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem asChild>
-                                                    <Link href={`/blog/${article.slug}`} target="_blank">
+                                                    <Link href={`/blog/${article.slug}`}>
                                                         <Eye className="mr-2 h-4 w-4" />
                                                         View
                                                     </Link>

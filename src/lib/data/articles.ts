@@ -162,9 +162,12 @@ export async function getArticlesByUserId(userId: string) {
 
 export async function deleteArticle(id: number) {
     try {
-        await prisma.article.delete({
-            where: { id }
-        })
+        await prisma.$transaction([
+            prisma.comment.deleteMany({ where: { articleId: id } }),
+            prisma.like.deleteMany({ where: { articleId: id } }),
+            prisma.savedArticle.deleteMany({ where: { articleId: id } }),
+            prisma.article.delete({ where: { id } })
+        ])
         return ResponseHelper.success(null, "Article deleted successfully");
     } catch (error) {
         return ResponseHelper.error(error, 'Internal Server Error', 500, null);
