@@ -44,12 +44,6 @@ export function DashboardSidebar({ className }: SidebarProps) {
             href: "/dashboard/article",
             color: "text-pink-700",
         },
-        {
-            label: "Analytics",
-            icon: BarChart3,
-            href: "/dashboard/analytics",
-            color: "text-orange-700",
-        },
         ...(userRole === "ADMIN" ? [{
             label: "Add Category",
             icon: PlusCircle,

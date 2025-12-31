@@ -38,14 +38,14 @@ export function Navbar() {
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
             <div className="container flex h-16 items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <Link href="/" className="flex items-center gap-2">
-                        <div className="relative">
+                    <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
+                        <div className="relative w-24 md:w-32">
                             <Image
                                 src="/images/logo.png"
                                 alt="DevJournal Logo"
                                 width={130}
                                 height={120}
-                                className="object-contain h-auto"
+                                className="object-contain h-auto w-full"
                                 priority
                             />
                         </div>
@@ -66,15 +66,17 @@ export function Navbar() {
                             {user && <UserMenu user={user} onSignOut={handleSignOut} />}
                         </div>
                     ) : (
-                        <div className="hidden md:flex items-center gap-4">
-                            <Link href="/auth/login">
-                                <Button variant="ghost" size="sm">
-                                    Log in
-                                </Button>
-                            </Link>
-                            <Link href="/auth/register">
-                                <Button size="sm">Sign up</Button>
-                            </Link>
+                        <div className="flex items-center gap-2">
+                            <div className="hidden sm:flex items-center gap-2 md:gap-4">
+                                <Link href="/auth/login">
+                                    <Button variant="ghost" size="sm" className="hidden md:flex">
+                                        Log in
+                                    </Button>
+                                </Link>
+                                <Link href="/auth/register">
+                                    <Button size="sm">Sign up</Button>
+                                </Link>
+                            </div>
                         </div>
                     )}
 

@@ -1,12 +1,11 @@
 import prisma from "@/lib/prisma";
-import { FileText, Eye, MessageCircle, Heart, Bookmark } from "lucide-react";
+import { FileText, Eye, MessageCircle, Bookmark } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export async function DashboardStats({ userId }: { userId: string }) {
-    const [articlesCount, aggregateViews, totalLikes, totalComments, totalSaves] = await Promise.all([
+    const [articlesCount, aggregateViews, totalComments, totalSaves] = await Promise.all([
         prisma.article.count({ where: { userId } }),
         prisma.article.aggregate({ where: { userId }, _sum: { views: true } }),
-        prisma.like.count({ where: { article: { userId } } }),
         prisma.comment.count({ where: { article: { userId } } }),
         prisma.savedArticle.count({ where: { article: { userId } } }),
     ]);
@@ -27,13 +26,6 @@ export async function DashboardStats({ userId }: { userId: string }) {
             description: "Total reader reach"
         },
         {
-            title: "Total Likes",
-            value: totalLikes.toLocaleString(),
-            icon: Heart,
-            color: "text-rose-500",
-            description: "Positive reader feedback"
-        },
-        {
             title: "Total Saves",
             value: totalSaves.toLocaleString(),
             icon: Bookmark,
@@ -50,7 +42,7 @@ export async function DashboardStats({ userId }: { userId: string }) {
     ];
 
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => (
                 <Card key={stat.title}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

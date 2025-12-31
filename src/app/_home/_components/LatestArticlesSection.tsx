@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Clock, Eye } from "lucide-react"
 import { getArticles } from '@/lib/data/articles'
 import { dataFormat } from '@/utils/dataFormat'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default async function LatestArticlesSection() {
     const latestResponse = await getArticles({ limit: 4 });
@@ -65,6 +66,10 @@ export default async function LatestArticlesSection() {
 
                                 <div className="flex items-center justify-between pt-4 border-t mt-auto">
                                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                        <Avatar className="h-6 w-6">
+                                            <AvatarImage src={article.user?.image} alt={article.user?.name} />
+                                            <AvatarFallback className="text-[8px]">{article.user?.name?.charAt(0)}</AvatarFallback>
+                                        </Avatar>
                                         <span className="font-medium text-foreground">{article.user?.name}</span>
                                     </div>
                                     <div className="flex items-center gap-1 text-xs text-muted-foreground">

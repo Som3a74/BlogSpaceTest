@@ -25,7 +25,7 @@ const HeroSection = () => {
                             <Link href="/blog">Start Reading Now</Link>
                         </Button>
                         <Button variant="outline" size="lg" className="rounded-full h-12 px-8 text-base border-primary/20 hover:bg-primary/5" asChild>
-                            <Link href="#newsletter">Join Newsletter</Link>
+                            <Link href="/profile">Join Newsletter</Link>
                         </Button>
                     </div>
                 </div>

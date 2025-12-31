@@ -7,7 +7,7 @@ export interface BlogCardProps {
     user: {
         id: string
         name: string
-        avatar?: string
+        image?: string
     }
     category: {
         id: string

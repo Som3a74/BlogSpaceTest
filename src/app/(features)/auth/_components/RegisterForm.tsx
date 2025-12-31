@@ -11,17 +11,16 @@ import { toast } from "sonner"
 import { authClient } from "@/lib/auth-client";
 import { registerSchema } from "@/lib/validations/api-schemas"
 import { z } from "zod"
+import { useRouter } from "next/navigation"
+
 
 type RegisterFormValues = z.infer<typeof registerSchema>
 
 export function RegisterForm() {
     const [loading, setLoading] = useState(false)
+    const router = useRouter()
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<RegisterFormValues>({
+    const { register, handleSubmit, formState: { errors }, } = useForm<RegisterFormValues>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
             name: "",
@@ -31,17 +30,14 @@ export function RegisterForm() {
     })
 
     const onSubmit = async (values: RegisterFormValues) => {
-        await authClient.signUp.email({
-            email: values.email,
-            password: values.password,
-            name: values.name,
-            callbackURL: "/"
-        }, {
+        await authClient.signUp.email({ email: values.email, password: values.password, name: values.name, callbackURL: "/" }, {
             onRequest: () => {
                 setLoading(true)
             },
             onSuccess: (ctx) => {
                 toast.success("Account created successfully, welcome " + ctx.data.user.name)
+                router.push("/")
+                router.refresh()
             },
             onError: (ctx) => {
                 toast.error(ctx.error.message || "Something went wrong");

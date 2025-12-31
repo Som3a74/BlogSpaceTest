@@ -3,8 +3,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export function StatsSkeleton() {
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-            {[1, 2, 3, 4, 5].map((i) => (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {[1, 2, 3, 4].map((i) => (
                 <Card key={i}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <Skeleton className="h-4 w-24" />
@@ -37,5 +37,39 @@ export function CategoriesSkeleton() {
                 ))}
             </CardContent>
         </Card>
+    );
+}
+
+export function ChartsSkeleton() {
+    return (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+            <Card className="col-span-4 h-100">
+                <CardHeader>
+                    <Skeleton className="h-6 w-32" />
+                    <Skeleton className="h-4 w-48" />
+                </CardHeader>
+                <CardContent>
+                    <Skeleton className="h-full w-full" />
+                </CardContent>
+            </Card>
+            <Card className="col-span-3 h-100">
+                <CardHeader>
+                    <Skeleton className="h-6 w-32" />
+                    <Skeleton className="h-4 w-48" />
+                </CardHeader>
+                <CardContent>
+                    <Skeleton className="h-full w-full" />
+                </CardContent>
+            </Card>
+            <Card className="col-span-full h-100">
+                <CardHeader>
+                    <Skeleton className="h-6 w-32" />
+                    <Skeleton className="h-4 w-48" />
+                </CardHeader>
+                <CardContent className="h-62.5">
+                    <Skeleton className="h-full w-full" />
+                </CardContent>
+            </Card>
+        </div>
     );
 }

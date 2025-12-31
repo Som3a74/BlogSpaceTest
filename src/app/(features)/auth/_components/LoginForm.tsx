@@ -17,11 +17,7 @@ type LoginFormValues = z.infer<typeof loginSchema>
 export function LoginForm() {
     const [loading, setLoading] = useState(false)
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<LoginFormValues>({
+    const { register, handleSubmit, formState: { errors }, } = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
             email: "",
@@ -30,11 +26,7 @@ export function LoginForm() {
     })
 
     const onSubmit = async (values: LoginFormValues) => {
-        await authClient.signIn.email({
-            email: values.email,
-            password: values.password,
-            callbackURL: "/"
-        }, {
+        await authClient.signIn.email({ email: values.email, password: values.password, callbackURL: "/" }, {
             onRequest: () => {
                 setLoading(true)
             },

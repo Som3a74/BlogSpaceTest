@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils"
 import { dataFormat } from '@/utils/dataFormat'
 import { BlogCardProps } from '../types/blogTypes'
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
 const BlogCard = ({
     id,
     title,
@@ -16,7 +18,7 @@ const BlogCard = ({
     image,
     updatedAt,
     createdAt,
-    user = { id: "#", name: "John Doe", avatar: "" },
+    user = { id: "#", name: "John Doe", image: "" },
     slug = "#",
     views = 0,
     className
@@ -52,10 +54,13 @@ const BlogCard = ({
             </CardContent>
             <CardFooter className="pt-0 flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm font-medium">
-                    <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-xs text-primary font-bold">
-                        {user.name.charAt(0)}
-                    </div>
-                    {user.name}
+                    <Avatar className="h-8 w-8 border border-border shadow-sm">
+                        <AvatarImage src={user.image} alt={user.name} />
+                        <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-bold">
+                            {user.name.charAt(0)}
+                        </AvatarFallback>
+                    </Avatar>
+                    <span className="text-muted-foreground">{user.name}</span>
                 </div>
                 <Button variant="ghost" size="sm" className="gap-1 text-primary hover:text-primary/80 p-0 hover:bg-transparent" asChild>
                     <Link href={`/blog/${slug}`}>
