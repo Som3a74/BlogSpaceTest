@@ -1,4 +1,3 @@
-import React from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
 
 const Loading = () => {
@@ -11,7 +10,7 @@ const Loading = () => {
                     <Skeleton className="h-6 w-1/2" />
                 </div>
                 {/* Slider Skeleton */}
-                <Skeleton className="w-full h-[400px] rounded-xl" />
+                <Skeleton className="w-full h-100 rounded-xl" />
             </section>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -32,7 +31,7 @@ const Loading = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                         {Array.from({ length: 6 }).map((_, i) => (
                             <div key={i} className="flex flex-col space-y-3">
-                                <Skeleton className="h-[200px] w-full rounded-xl" />
+                                <Skeleton className="h-50 w-full rounded-xl" />
                                 <div className="space-y-2">
                                     <Skeleton className="h-4 w-1/3" />
                                     <Skeleton className="h-6 w-full" />

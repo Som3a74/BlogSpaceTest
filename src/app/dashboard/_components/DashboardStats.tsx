@@ -3,40 +3,13 @@ import { FileText, Eye, MessageCircle, Heart, Bookmark } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export async function DashboardStats({ userId }: { userId: string }) {
-    const articlesCount = await prisma.article.count({
-        where: { userId }
-    });
-
-    const aggregateViews = await prisma.article.aggregate({
-        where: { userId },
-        _sum: {
-            views: true
-        }
-    });
-
-    const totalLikes = await prisma.like.count({
-        where: {
-            article: {
-                userId: userId
-            }
-        }
-    });
-
-    const totalComments = await prisma.comment.count({
-        where: {
-            article: {
-                userId: userId
-            }
-        }
-    });
-
-    const totalSaves = await prisma.savedArticle.count({
-        where: {
-            article: {
-                userId: userId
-            }
-        }
-    });
+    const [articlesCount, aggregateViews, totalLikes, totalComments, totalSaves] = await Promise.all([
+        prisma.article.count({ where: { userId } }),
+        prisma.article.aggregate({ where: { userId }, _sum: { views: true } }),
+        prisma.like.count({ where: { article: { userId } } }),
+        prisma.comment.count({ where: { article: { userId } } }),
+        prisma.savedArticle.count({ where: { article: { userId } } }),
+    ]);
 
     const stats = [
         {

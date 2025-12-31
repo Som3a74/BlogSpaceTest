@@ -25,7 +25,6 @@ const Page = async ({
 }) => {
     const params = await searchParams;
 
-    // Fetch latest articles for slider (always latest, no filter)
     const sliderResponse = await getArticles({ limit: 5 });
     const sliderArticles = sliderResponse.data?.articles || [];
 

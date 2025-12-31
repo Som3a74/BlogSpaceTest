@@ -13,7 +13,7 @@ const HeroSection = () => {
                         <Sparkles className="w-3 h-3 mr-2 inline" />
                         V2.0 is Live
                     </Badge>
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
+                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground pb-2">
                         Stories specific <br className="hidden md:block" />
                         for the <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-indigo-500">Curious Minds</span>
                     </h1>

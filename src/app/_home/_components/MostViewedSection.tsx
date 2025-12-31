@@ -1,10 +1,9 @@
-
 import Link from 'next/link'
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Trophy, ArrowRight } from "lucide-react"
 import { getArticles } from '@/lib/data/articles'
-import BlogCard from '../../blog/_components/BlogCard'
+import BlogCard from '@/app/blog/_components/BlogCard'
 
 export default async function MostViewedSection() {
     const mostViewedResponse = await getArticles({ sort: 'most-viewed', limit: 3 });

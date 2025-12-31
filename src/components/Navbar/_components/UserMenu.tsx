@@ -22,7 +22,7 @@ export function UserMenu({ user, onSignOut }: UserMenuProps) {
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full ring-2 ring-primary/10 hover:ring-primary/30 transition-all">
                     <Avatar className="size-9">
-                        <AvatarImage className="object-cover" src={user.image || ""} alt={user.name || ""} />
+                        <AvatarImage className="object-cover" loading="lazy" src={user.image || ""} alt={user.name || ""} />
                         <AvatarFallback className="bg-primary/5 text-primary font-bold">
                             {user.name?.charAt(0)}
                         </AvatarFallback>

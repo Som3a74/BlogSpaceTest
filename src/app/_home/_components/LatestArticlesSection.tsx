@@ -35,7 +35,7 @@ export default async function LatestArticlesSection() {
                             <div className="shrink-0 w-full sm:w-48 h-48 sm:h-auto rounded-xl overflow-hidden relative">
                                 <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10" />
                                 <Image
-                                    src={article.image || "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80"}
+                                    src={article.image}
                                     alt={article.title}
                                     fill
                                     className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
